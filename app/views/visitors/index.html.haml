@@ -1,0 +1,35 @@
+%body
+  .container
+    / Jumbotron Header
+    %header.jumbotron.hero-spacer
+      .container.text-center
+        .col-md-12
+          %h1 GET FREE SWAPS!
+          %p No credit card information required. Which fabrics would you like us to send you?
+          .container
+            .col-md-3
+              %p.numberCircle 1
+              %p{:style => ""} SELECT ANY 5 SWATCHES
+            .col-md-3.col-md-offset-1
+              %p.numberCircle 2
+              %p{:style => ""} TELL US WHERE TO SHIP THESE SWATCHES
+            .col-md-3.col-md-offset-1
+              %p.numberCircle 3
+              %p{:style => ""} GET SWATCHES IN 3 DAYS
+    / Title
+    / /.row
+    / Page Features
+    / .row.text-center
+    %hr/
+    .container
+      / = form_tag(checkout_orders_path) do
+      = form_tag checkout_orders_path, method: :post, id: "checkout_form" do 
+        = render "orders/fabric_details", :locals => { :fabrics => @fabrics, :add_button => @add_button, :remove_button => @remove_button}
+        %hr/
+    %hr/
+    / Footer
+    %footer
+      .row
+        .col-lg-12
+          %p Copyright © Your Website 2014
+  

@@ -1,0 +1,6 @@
+%p{:style => "margin-bottom: 10px"}
+  Hi #{@order.user.name},
+%p{:style => "margin-bottom: 10px"}
+  Thank you for using Barn & Willow
+%p{:style => "margin-bottom: 10px"}
+  Your order will be shipped to you by #{(@order.created_at+72.hours).strftime("%d %b. %Y")}

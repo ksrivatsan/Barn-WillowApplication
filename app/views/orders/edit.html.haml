@@ -1,0 +1,10 @@
+%h1 Editing order
+
+%body
+  .container
+    .text-center
+      = render "fabric_details", :locals => { :fabrics => @fabrics }
+
+= link_to 'Show', @order
+\|
+= link_to 'Back', orders_path

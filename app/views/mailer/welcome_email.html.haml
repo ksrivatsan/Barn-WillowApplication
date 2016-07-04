@@ -1,0 +1,13 @@
+%p{:style => "margin-bottom: 10px"}
+	Hello #{@user.name},
+%p{:style => "margin-bottom: 10px"}
+	Thank you for registering at Barn & Willow.
+%p{:style => "margin-bottom: 10px"}
+	This would be your authentication token: #{@user.auth_token}
+%p{:style => "margin-bottom: 10px"}
+	This is your referral token: #{@user.referral_id}
+%p{:style => "margin-bottom: 10px"}
+	At Barn & Willow you can browse and order through a variety of swatches and guess what? Your first order is completely free.
+%p{:style => "margin-bottom: 10px"}
+	Checkout our swatches and place an order if you like them.
+	%span{:stye => "display:inline"}= link_to "CLICK HERE", root_url

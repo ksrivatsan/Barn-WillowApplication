@@ -1,13 +1,15 @@
 -# navigation styled for Bootstrap 3.0
 %nav.navbar.navbar-default.navbar-fixed-top
   .container
-    .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      = link_to 'Home', root_path, class: 'navbar-brand'
-    .collapse.navbar-collapse
-      %ul.nav.navbar-nav
-        = render 'layouts/navigation_links'
+    .navbar.navbar-default.navbar-fixed-top
+      .navbar-header
+        %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        
+        = link_to image_tag("https://cdn.shopify.com/s/files/1/0455/8913/t/70/assets/logo.png?v=2", {:style => "height: 50px"}), root_path
+      .navbar-collapse.collapse
+        %ul.nav.navbar-nav.navbar-right
+          = render 'layouts/navigation_links'

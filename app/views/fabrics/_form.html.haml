@@ -1,0 +1,19 @@
+= form_for @fabric do |f|
+  - if @fabric.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@fabric.errors.count, "error")} prohibited this fabric from being saved:"
+      %ul
+        - @fabric.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :type
+    = f.text_field :type
+  .field
+    = f.label :color
+    = f.text_field :color
+  .field
+    = f.label :image_url
+    = f.text_field :image_url
+  .actions
+    = f.submit 'Save'

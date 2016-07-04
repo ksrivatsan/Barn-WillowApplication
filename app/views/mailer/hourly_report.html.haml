@@ -1,0 +1,48 @@
+%p{:style => "margin-bottom: 10px"}
+	Hello #{@report_to_name},
+%p{:style => "margin-bottom: 10px"}
+	#{@orders.count} orders were created in the past one hour.
+- if @orders.count > 0
+	%p{:style => "margin-bottom: 10px"}
+		#{@referral_based.count} people used referrals and #{@non_referral_based.count} were original customers.
+	%p{:style => "margin-bottom: 10px"}
+		Here are the order details
+	%p{:style => "margin-bottom: 10px"}
+		%p{:style => "font-weight:bold;"} Orders using referral
+		%table{:style => "background-color: white; width:570px; border-top: 12px solid #3BA936; padding: 0.1em 1em !important;"}
+			%tbody
+				- unless @referral_based.empty?
+					- @referral_based.each do |order|
+						%tr{:style => "width:570px;padding: 0.1em 1em !important;"}
+							%td{:style=>"font-weight: bold;"} ID:
+							%td #{order.id}
+							%td{:style=>"font-weight: bold;"} Name:
+							%td #{order.name}
+							%td{:style=>"font-weight: bold;"} Email:
+							%td #{order.email_address}
+						%tr
+							%td{:style=>"font-weight: bold;"} Shipping Address
+							%td #{order.shipping_address}
+						%tr
+							%td{:style=>"font-weight: bold;"} Order Details
+							- Fabric.where(id: JSON.parse(order.order_details)).map{|f| f.fabric_type + " - " + f.fabric_color}.each do |fabric|
+								%td= fabric
+		%p{:style => "font-weight:bold;"}Orders without referral
+		%table{:style => "background-color: white; width:570px; border-top: 12px solid #3BA936; padding: 0.1em 1em !important;"}
+			%tbody
+				- unless @referral_based.empty?
+					- @referral_based.each do |order|
+						%tr{:style => "width:570px;padding: 0.1em 1em !important;"}
+							%td{:style=>"font-weight: bold;"} ID:
+							%td #{order.id}
+							%td{:style=>"font-weight: bold;"} Name:
+							%td #{order.name}
+							%td{:style=>"font-weight: bold;"} Email:
+							%td #{order.email_address}
+						%tr
+							%td{:style=>"font-weight: bold;"} Shipping Address
+							%td #{order.shipping_address}
+						%tr
+							%td{:style=>"font-weight: bold;"} Order Details
+							- Fabric.where(id: JSON.parse(order.order_details)).map{|f| f.fabric_type + " - " + f.fabric_color}.each do |fabric|
+								%td= fabric

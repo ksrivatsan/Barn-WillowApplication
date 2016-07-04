@@ -1,0 +1,19 @@
+- @fabrics.each do |fabric|
+  - @fabric_url = fabric.fabric_image_url.split(",")
+  - fabric_name = fabric.fabric_type + " - " + fabric.fabric_color
+  - fabric_name_for_class = fabric.fabric_color + '_' + fabric.fabric_type.split(' ').join('_')
+  
+  .col-md-4.col-sm-6.hero-feature
+    %img.single-swatch{:alt => "", :src => @fabric_url[0].split('"')[1], :class => "#{fabric.fabric_type.split(" ").join("_") + "_"+ fabric.fabric_color}"}
+    %ul.list-inline.text-center{:style=> "padding-top:20px;"}
+      %li
+        = link_to image_tag(@fabric_url[0].split('"')[1], {:style => "width: 75px;height: 70px;", :onclick => "change_image(this,event)", :data => {:type => fabric.fabric_type, :color => fabric.fabric_color}}), "#"
+      %li
+        = link_to image_tag(@fabric_url[1].split('"')[1], {:style => "width: 75px;height: 70px;", :onclick => "change_image(this,event)", :data => {:type => fabric.fabric_type, :color => fabric.fabric_color}}), "#"
+      %li
+        = link_to image_tag(@fabric_url[2].split('"')[1], {:style => "width: 75px;height: 70px;", :onclick => "change_image(this,event)", :data => {:type => fabric.fabric_type, :color => fabric.fabric_color}}), "#"
+      %p= fabric_name
+      = check_box_tag "selected[]", fabric.id, false ,{:style=>"display:none", :class => "#{fabric_name_for_class}"}
+      %button{:style => "",:class => 'text-center btn btn-default btn-lg', :style=>"background-color:#7FFFD4", :type => 'button', :onclick => "add_to_cart(this); hide_add_button(this)", :id => "#{'ADD_'+fabric_name_for_class}", :data => {type: fabric.fabric_type, :color => fabric.fabric_color}} ADD SWATCH TO CART $0
+      %button{:style => "display:none", :class => 'text-center btn btn-warning btn-lg remove', :type => 'button', :onclick => "remove_from_cart(this); hide_remove_button(this)", :id => "#{'REMOVE_'+fabric_name_for_class}", :data => {type: fabric.fabric_type, :color => fabric.fabric_color},} REMOVE FROM CART
+%hr/

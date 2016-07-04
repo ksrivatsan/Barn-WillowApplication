@@ -1,0 +1,22 @@
+%p{:style => "margin-bottom: 10px"}
+	Hi #{@order.user.name},
+%p{:style => "margin-bottom: 10px"}
+	Thank you for shopping Barn & Willow
+%p{:style => "margin-bottom: 10px"}
+	Your order number is #{@order.id}
+%p{:style => "margin-bottom: 10px"}
+	= link_to "CLICK HERE", edit_order_url(@order.id)
+%p{:style => "margin-bottom: 10px"}
+	Order details are as follows:
+%p{:style => "margin-bottom: 10px"}
+	#{@order.name}
+%p{:style => "margin-bottom: 10px"}
+	#{@order.email_address}
+%p{:style => "margin-bottom: 10px"}
+	#{@order.shipping_address}
+%p{:style => "margin-bottom: 10px"}
+	- @fabrics.each do |fabric|
+		%p{:style => "margin-bottom: 10px"}
+			= fabric
+%p{:style => "margin-bottom: 10px"}
+	Your order will be shipped to you by #{(@order.created_at+72.hours).strftime("%d %b. %Y")}

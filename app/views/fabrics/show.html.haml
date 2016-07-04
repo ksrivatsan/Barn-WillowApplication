@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Type:
+  = @fabric.type
+%p
+  %b Color:
+  = @fabric.color
+%p
+  %b Image url:
+  = @fabric.image_url
+
+= link_to 'Edit', edit_fabric_path(@fabric)
+\|
+= link_to 'Back', fabrics_path
