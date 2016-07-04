@@ -79,10 +79,10 @@ class API::V1::OrdersController < ApplicationController
 			if (@order && @order.save)
 				format.html { redirect_to @order, notice: 'Order was successfully created.' }
 				format.json { render json: {
-						url: {
+						urls: {
 							edit_link: (url_for :controller => 'orders', :action => 'edit', :id => @order.id),
 							delete_link: (url_for :controller => 'orders', :action => 'delete', :id => @order.id),
-							referral_link: (url_for :controller => 'orders', :action => 'referral', :id => @order.id, :referred_by => @order.user.referral_id)
+							referral_link: (url_for :controller => 'orders', :action => 'referral', :id => @order.id, :referred_by_id => @order.user.referral_id)
 						}
 					}
 				}
@@ -128,13 +128,20 @@ class API::V1::OrdersController < ApplicationController
 	end
 
 	def referral
-		ids = JSON.parse(@order.order_details)
-		@fabric_details = Fabric.where(id: ids).map{|f| f.fabric_type + " - " + f.fabric_color}
-		details = {
-			fabric_details: @fabric_details
-		}
+		if params["referred_by_id"].blank?
+			details = {fabric_details: {}}
+			status = "No referral id"
+		else
+			ids = JSON.parse(@order.order_details)
+			@fabric_details = Fabric.where(id: ids).map{|f| f.fabric_type + " - " + f.fabric_color}
+			details = {
+				fabric_details: @fabric_details
+			}
+			status = "ok"
+		end
 		respond_to do |format|
 			format.json { render json: {
+					status: status,
 					order_details: details
 				}
 			}

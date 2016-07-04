@@ -5,16 +5,17 @@
 %p{:style => "margin-bottom: 10px"}
 	Your order number is #{@order.id}
 %p{:style => "margin-bottom: 10px"}
-	= link_to "CLICK HERE", edit_order_url(@order.id)
+	= link_to "View your order.", edit_order_url(@order.id)
 %p{:style => "margin-bottom: 10px"}
 	Order details are as follows:
-%p{:style => "margin-bottom: 10px"}
-	#{@order.name}
-%p{:style => "margin-bottom: 10px"}
-	#{@order.email_address}
-%p{:style => "margin-bottom: 10px"}
-	#{@order.shipping_address}
-%p{:style => "margin-bottom: 10px"}
+%p{:style => "margin-bottom: 10px;padding-left: 20px;"}
+		Name: #{@order.name}
+%p{:style => "margin-bottom: 10px;padding-left: 20px;"}
+	Email Address: #{@order.email_address}
+%p{:style => "margin-bottom: 10px;padding-left: 20px;"}
+	Shipping Address: #{@order.shipping_address}
+%p{:style => "margin-bottom: 10px;padding-left: 20px;"}
+	Fabrics Type and Color
 	- @fabrics.each do |fabric|
 		%p{:style => "margin-bottom: 10px"}
 			= fabric

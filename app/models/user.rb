@@ -4,13 +4,8 @@ class User < ActiveRecord::Base
 
 	has_many :orders
   
-  # before_save :default_values
   before_create :generate_tokens, :validate_email
   after_create :send_user_credentials
-
-  # def default_values
-  # 	self.free_credit ||= 0
-  # end
 
   def generate_tokens
   	self.auth_token = loop do

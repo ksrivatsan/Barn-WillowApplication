@@ -28,7 +28,7 @@ module BarnAndWillow
       :port                 => 587,
       :domain               => "gmail.com",
       :user_name            => "kauvas@gmail.com",
-      :password             => "J@ishreeram2189",
+      :password             => "#{ENV_PASS}",
       :authentication       => :plain,
       :enable_starttls_auto => true
     }

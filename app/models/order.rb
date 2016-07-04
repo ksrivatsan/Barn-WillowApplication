@@ -7,7 +7,6 @@ class Order < ActiveRecord::Base
 	def after_create_tasks
 		unless referred_by.blank?
 			referrer = User.find_by(referral_id: referred_by)
-			orders = Order.where(referred_by:  referred_by, user_id: referrer.id)
 		end
 		if referrer
 			referrer.free_credit += 10
