@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-	validates_presence_of :name, :email_address, :shipping_address, :order_details
+	validates_presence_of :name, :email_address, :shipping_address, :order_details, :user_id
 	belongs_to :user
 
 	after_create :after_create_tasks
@@ -16,7 +16,6 @@ class Order < ActiveRecord::Base
 		else
 			self.update(used_referral: false)
 		end
-		self.update(user_id: self.user.id)
 		Mailer.delay.order_created(self)
 	end
 end

@@ -14,7 +14,7 @@ class Mailer < ApplicationMailer
   end
 
   def hourly_report
-  	query = Order.where(created_at: 24.hour.ago..Time.now)
+  	query = Order.where(created_at: 1.hour.ago..Time.now)
   	@orders = query
   	unless query.empty?
   		@referral_based = query.where(used_referral: true)

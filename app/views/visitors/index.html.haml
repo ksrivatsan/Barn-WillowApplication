@@ -23,7 +23,8 @@
     %hr/
     .container
       / = form_tag(checkout_orders_path) do
-      = form_tag checkout_orders_path, method: :post, id: "checkout_form" do 
+      = form_tag checkout_orders_path, method: :post, id: "checkout_form" do
+        = hidden_field_tag "referred_by_id", @referred_by_id
         = render "orders/fabric_details", :locals => { :fabrics => @fabrics, :add_button => @add_button, :remove_button => @remove_button}
         %hr/
     %hr/

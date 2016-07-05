@@ -27,6 +27,9 @@ Rails.application.routes.draw do
   		post 'checkout'
 	  	post 'create_new'
 	  end
+	  member do
+	  	get 'edit_my_order'
+	  end
   end
   resources :fabrics
   root to: 'visitors#index'

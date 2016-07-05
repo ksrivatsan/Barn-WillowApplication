@@ -2,63 +2,58 @@
   .container
     .text-center
       = render "fabric_details", :locals => { :fabrics => @fabrics }
+      %button{:style => "display:none", :class => "btn", :id => "continue_shopping"}= link_to 'ADD SWATCHES TO CART', root_url
   %hr/
-  .container
+  #order_info.container
     .col-md-6
-      = form_tag create_new_orders_path, method: :post do
-        = hidden_field_tag "order_details", @fabrics.pluck(:id).to_json, {:style=> "display:none"}
-        %fieldset.form-group.col-lg-12
-          %label.lead{:for => "customer_email"} Customer Information
-          #customer_email= text_field_tag 'email_address', nil, {:class=> "form-control input-lg", :placeholder => "Enter Email"}
-          / {:placeholder => "Email", :type => "email"}
-          / = text_field_tag 'email_address', nil, {:placeholder => 'Enter Email'}
-        %fieldset.form-group.col-lg-12
-          %label.lead Shipping Address
-        %fieldset.form-group.col-lg-6
-          #firstname= text_field_tag 'firstname', nil, {:class=> "form-control input-lg", :placeholder => "First Name"}
-          / {:placeholder => "First Name", :type => "text"}
-          / = text_field_tag 'firstname', nil, {:placeholder => 'First Name'}
-
-        %fieldset.form-group.col-lg-6
-          #lastname= text_field_tag 'lastname', nil, {:class=> "form-control input-lg", :placeholder => "Last Name"}
-          / {:placeholder => "Last Name", :type => "text"}
-          / = text_field_tag 'lastname', nil, {:placeholder => 'Last Name'}
-
-        %fieldset.form-group.col-lg-9
-          #address= text_field_tag 'address', nil, {:class=> "form-control input-lg", :placeholder => " 'Address"}
-          / {:placeholder => "Address", :type => "text"}
-          / = text_field_tag 'address', nil, {:placeholder => 'Address'}
-
-        %fieldset.form-group.col-lg-3
-          #apt_no= text_field_tag 'apt_no', nil, {:class=> "form-control input-lg", :placeholder => "Apt, suite, etc. (Optional)"}
-          / {:placeholder => "Apt, suite, etc.(Optional)", :type => "text"}
-          / = text_field_tag 'apt_no', nil, {:placeholder => 'Apt, suite, etc.(Optional)'}
-
-        %fieldset.form-group.col-lg-12
-          #city= text_field_tag 'city', nil, {:class=> "form-control input-lg", :placeholder => "Enter city"}
-          / {:placeholder => "City", :type => "text"}
-          / = text_field_tag 'city', nil, {:placeholder => 'Enter city'}
-
-        %fieldset.form-group.col-lg-3
-          #country= text_field_tag 'country', nil, {:class=> "form-control input-lg", :placeholder => "USA", :readonly => true}
-          / = text_field_tag 'country', nil, {:class=> "form-control input-lg", :placeholder => " 'Country"}
-          / {:placeholder => "Country", :type => "text"}
-          / = text_field_tag 'country', nil, {:placeholder => 'Country'}
-
-        %fieldset.form-group.col-lg-3
-          #state= select_tag 'state', options_for_select(@states_list.to_a)
-          / {:placeholder => "State", :type => "text"}
-          / = text_field_tag 'state', nil, {:placeholder => 'State'}
-
-        %fieldset.form-group.col-lg-3
-          #zipcode= text_field_tag 'zipcode', nil, {:class=> "form-control input-lg", :placeholder => " 'Zipcode"}
-          / {:placeholder => "zipcode", :type => "text"}
-          / = text_field_tag 'zipcode', nil, {:placeholder => 'Zipcode'}
-        %fieldset.form-group.col-lg-6
-          #referred_by= text_field_tag 'referred_by', nil, {:class=> "form-control input-lg", :placeholder => " 'Enter referrs email address"}
-        %button.btn.btn-primary.btn-lg.col-lg-3 Order
+      / = form_tag create_new_orders_path, method: :post do
+      = form_tag(@url, method: @method) do
+        = hidden_field_tag "order_details", @fabrics.pluck(:id).to_json, {:style=> "display:none", :class => "order_details"}
+        - if (@checkout == "true")
+          = hidden_field_tag "referred_by_id", @referred_by_id, {:style=> "display:none"}
+          %fieldset.form-group.col-lg-12
+            %label.lead{:for => "customer_email"} Customer Information
+            #customer_email= text_field_tag 'email_address', nil, {:class=> "form-control input-lg", :placeholder => "Enter Email"}
+          %fieldset.form-group.col-lg-12
+            %label.lead Shipping Address
+          %fieldset.form-group.col-lg-6
+            #firstname= text_field_tag 'firstname', nil, {:class=> "form-control input-lg", :placeholder => "First Name", :require => true}
+          %fieldset.form-group.col-lg-6
+            #lastname= text_field_tag 'lastname', nil, {:class=> "form-control input-lg", :placeholder => "Last Name", :require => true}
+          %fieldset.form-group.col-lg-9
+            #address= text_field_tag 'address', nil, {:class=> "form-control input-lg", :placeholder => "Address", :require => true}
+          %fieldset.form-group.col-lg-3
+            #apt_no= text_field_tag 'apt_no', nil, {:class=> "form-control input-lg", :placeholder => "Apt, suite, etc. (Optional)"}
+          %fieldset.form-group.col-lg-12
+            #city= text_field_tag 'city', nil, {:class=> "form-control input-lg", :placeholder => "Enter city", :require => true}
+          %fieldset.form-group.col-lg-3
+            #country= text_field_tag 'country', nil, {:class=> "form-control input-lg", :placeholder => "USA", :readonly => true}
+          %fieldset.form-group.col-lg-3
+            #state= select_tag 'state', options_for_select(@states_list.to_a), {:class => "form-control input-lg", :require => true}
+          %fieldset.form-group.col-lg-3
+            #zipcode= text_field_tag 'zipcode', nil, {:class=> "form-control input-lg", :placeholder => "Zipcode", :require => true}
+          %button.btn.btn-primary.btn-lg.col-lg-3{:onclick => "check_if_cart_is_empty(event)"} Order
+        - else
+          %fieldset.form-group.col-lg-12
+            %label.lead{:for => "customer_email"} Customer Information
+            #customer_email= text_field_tag 'email_address', @order.email_address, {:class=> "form-control input-lg", :placeholder => "Enter Email", :readonly => true}
+          %fieldset.form-group.col-lg-12
+            %label.lead Shipping Address
+          %fieldset.form-group.col-lg-6
+            #firstname= text_field_tag 'firstname', @order.name.split(" ")[0], {:class=> "form-control input-lg", :placeholder => "First Name", :require => true}
+          %fieldset.form-group.col-lg-6
+            #lastname= text_field_tag 'lastname', @order.name.split(" ")[1], {:class=> "form-control input-lg", :placeholder => "Last Name", :require => true}
+          %fieldset.form-group.col-lg-9
+            #address= text_field_tag 'address', @order.shipping_address, {:class=> "form-control input-lg", :placeholder => "Address", :require => true}
+          %fieldset.form-group.col-lg-3
+            #apt_no= text_field_tag 'apt_no', nil, {:class=> "form-control input-lg", :placeholder => "Apt, suite, etc. (Optional)"}
+          %fieldset.form-group.col-lg-12
+            #city= text_field_tag 'city', nil, {:class=> "form-control input-lg", :placeholder => "Enter city", :require => true}
+          %fieldset.form-group.col-lg-3
+            #country= text_field_tag 'country', nil, {:class=> "form-control input-lg", :placeholder => "USA"}
+          %fieldset.form-group.col-lg-3
+            #state= select_tag 'state', options_for_select(@states_list.to_a, @order), {:class => "form-control input-lg", :require => true}
+          %fieldset.form-group.col-lg-3
+            #zipcode= text_field_tag 'zipcode', nil, {:class=> "form-control input-lg", :placeholder => "Zipcode", :require => true}
+          %button.btn.btn-primary.btn-lg.col-lg-4{:onclick => "check_if_cart_is_empty(event)"} Update Order
     .col-md-3
-
-
-
-

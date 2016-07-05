@@ -44,6 +44,22 @@ function remove_from_cart(element){
 	document.getElementsByClassName(color +"_" + type.split(" ").join("_"))[0].selected = false;
 }
 
+function remove_from_cart_on_checkout(element){
+	type = element.getAttribute("data-type");
+	color = element.getAttribute("data-color");
+	document.getElementsByClassName("remove_div_for_"+color +"_" + type.split(" ").join("_"))[0].style = "display:none;";
+	remove_from_order_details = document.getElementsByClassName("remove_div_for_"+color +"_" + type.split(" ").join("_"))[0].getAttribute("data-id");
+	el = document.getElementsByClassName("order_details")[0];
+	array = JSON.parse(el.value);
+	array.remove(parseInt(remove_from_order_details));
+	el = document.getElementsByClassName("order_details")[0].setAttribute("value", "[" + array.toString() + "]");
+	if(array.length < 1){
+		alert("Cart is empty. Please add something to the cart!");
+		document.getElementById("continue_shopping").style = "display:visible;background-color:aqua;";
+		document.getElementById("order_info").style="display:none";
+	}
+}
+
 function hide_add_button(element){
 	element.style = "display:none";
 	color = element.getAttribute("data-color");
@@ -72,9 +88,24 @@ function change_image(element, event){
 
 }
 
-// function checkout(e){
-// 	cart_is_empty(e);
-// }
+if (!Array.prototype.remove) {
+  Array.prototype.remove = function(vals, all) {
+    var i, removedItems = [];
+    if (!Array.isArray(vals)) vals = [vals];
+    for (var j=0;j<vals.length; j++) {
+      if (all) {
+        for(i = this.length; i--;){
+          if (this[i] === vals[j]) removedItems.push(this.splice(i, 1));
+        }
+      }
+      else {
+        i = this.indexOf(vals[j]);
+        if(i>-1) removedItems.push(this.splice(i, 1));
+      }
+    }
+    return removedItems;
+  };
+}
 
 function checkout(e){
 	var checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -85,6 +116,14 @@ function checkout(e){
 		e.preventDefault();
 	} else {
 		document.forms["checkout_form"].submit();
+	}
+}
+
+function check_if_cart_is_empty(e){
+	el = document.getElementsByClassName("order_details")[0];
+	if(JSON.parse(el.value).length < 1){
+		alert("Cart can't be empty!");
+		e.preventDefault();
 	}
 }
 

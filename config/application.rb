@@ -28,11 +28,10 @@ module BarnAndWillow
       :port                 => 587,
       :domain               => "gmail.com",
       :user_name            => "kauvas@gmail.com",
-      :password             => "#{ENV_PASS}",
+      :password             => "#{$ENV_PASS}",
       :authentication       => :plain,
       :enable_starttls_auto => true
     }
-    p "#{$ENV_PASS}"
     config.action_mailer.raise_delivery_errors = true
   end
 end
